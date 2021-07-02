@@ -12,6 +12,7 @@ from torchvision.transforms.functional import rotate
 from wilds.datasets.camelyon17_dataset import Camelyon17Dataset
 from wilds.datasets.fmow_dataset import FMoWDataset
 
+from RandAugment import RandAugment
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 DATASETS = [
@@ -199,7 +200,9 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
             transforms.Normalize(
                 mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ])
-
+        if hparams['randaug']:
+            augment_transform.insert(RandAugment(hparams['N'],hparams['M']))
+        
         self.datasets = []
         for i, environment in enumerate(environments):
 

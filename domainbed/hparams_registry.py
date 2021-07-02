@@ -36,6 +36,12 @@ def _hparams(algorithm, dataset, random_seed):
     _hparam('nonlinear_classifier', False,
             lambda r: bool(r.choice([False, False])))
 
+    # rand aug hps
+    _hparam('randaug', False,  lambda r: bool(r.choice([True, False])))
+    _hparam('N', 1.0, lambda r: r.uniform(2, 8))
+    _hparam('M', 1.0, lambda r: r.uniform(2, 8))
+
+    
     # Algorithm-specific hparam definitions. Each block of code below
     # corresponds to exactly one algorithm.
 
