@@ -48,11 +48,27 @@ def multi_gpu_launcher(commands):
         if p is not None:
             p.wait()
 
+def computecanada_launcher(commands):
+    """Launch commands serially on the local machine."""
+    print(type(commands),len(commands))
+    for cmd in commands:
+
+        f=open('commands.txt','w')
+        for ele in commands:
+            f.write(ele+'\n')
+        f.close()
+        
+    command = 'sbatch'+ ' ' + 'single.sh' 
+    print(command)
+    subprocess.call(command, shell=True)
+
+
 REGISTRY = {
     'local': local_launcher,
-    'dummy': dummy_launcher,
-    'multi_gpu': multi_gpu_launcher
+    'computecanada': computecanada_launcher,
+    'dummy': dummy_launcher
 }
+
 
 try:
     from domainbed import facebook
