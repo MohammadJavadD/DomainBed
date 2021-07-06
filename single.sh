@@ -2,7 +2,7 @@
 #SBATCH --array=0-240
 #SBATCH --account=def-jfaubert
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:v100:1
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks-per-node=4
 #SBATCH --mem=32000M
 #SBATCH --time=10:00:00

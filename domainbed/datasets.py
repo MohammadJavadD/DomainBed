@@ -201,7 +201,7 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
                 mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ])
         if hparams['randaug']:
-            augment_transform.insert(RandAugment(hparams['N'],hparams['M']))
+            augment_transform.transforms.insert(0, RandAugment(hparams['N'],hparams['M']))
         
         self.datasets = []
         for i, environment in enumerate(environments):
