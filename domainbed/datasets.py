@@ -48,7 +48,7 @@ def num_environments(dataset_name):
 class MultipleDomainDataset:
     N_STEPS = 5001           # Default, subclasses may override
     CHECKPOINT_FREQ = 100    # Default, subclasses may override
-    N_WORKERS = 8            # Default, subclasses may override
+    N_WORKERS = 4            # Default, subclasses may override
     ENVIRONMENTS = None      # Subclasses should override
     INPUT_SHAPE = None       # Subclasses should override
 
@@ -204,6 +204,7 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
         if hparams['randaug']:
             # augment_transform.transforms.insert(0, RandAugment(hparams['N'],hparams['M']))
             augment_transform = transforms.Compose([
+            transforms.Resize((224,224)),
             RandAugment(hparams['N'],hparams['M']),
             # transforms.Resize((224,224)),
             # transforms.RandomResizedCrop(224, scale=(0.7, 1.0)),
