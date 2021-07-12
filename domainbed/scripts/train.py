@@ -90,7 +90,7 @@ if __name__ == "__main__":
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-    if torch.cuda.is_available():
+    if False:#torch.cuda.is_available():
         device = "cuda"
     else:
         device = "cpu"
