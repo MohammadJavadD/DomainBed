@@ -38,8 +38,9 @@ def _hparams(algorithm, dataset, random_seed):
 
     # rand aug hps
     _hparam('randaug', True,  lambda r: bool(r.choice([True, True])))
-    _hparam('N', 3, lambda r: int(r.uniform(1, 10)))
-    _hparam('M', 4, lambda r: int(r.uniform(1, 10)))
+    _hparam('np', 3, lambda r: int(r.uniform(1, 8)))
+    _hparam('nt', 3, lambda r: int(r.uniform(1, 10)))
+    _hparam('A', 4, lambda r: int(r.uniform(1, 10)))
 
     
     # Algorithm-specific hparam definitions. Each block of code below

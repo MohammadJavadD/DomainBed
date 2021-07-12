@@ -48,7 +48,7 @@ def num_environments(dataset_name):
 class MultipleDomainDataset:
     N_STEPS = 5001           # Default, subclasses may override
     CHECKPOINT_FREQ = 100    # Default, subclasses may override
-    N_WORKERS = 4            # Default, subclasses may override
+    N_WORKERS = 8           # Default, subclasses may override
     ENVIRONMENTS = None      # Subclasses should override
     INPUT_SHAPE = None       # Subclasses should override
 
@@ -203,9 +203,10 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
         
         if hparams['randaug']:
             # augment_transform.transforms.insert(0, RandAugment(hparams['N'],hparams['M']))
+            # transform.transforms.insert(1, RandAugment(hparams['N'],hparams['M']))
             augment_transform = transforms.Compose([
             transforms.Resize((224,224)),
-            RandAugment(hparams['N'],hparams['M']),
+            RandAugment(hparams['nt'],hparams['A']),
             # transforms.Resize((224,224)),
             # transforms.RandomResizedCrop(224, scale=(0.7, 1.0)),
             # transforms.RandomHorizontalFlip(),
@@ -225,13 +226,18 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
                 env_transform = transform
 
             path = os.path.join(root, environment)
-            env_dataset = ImageFolder(path,
-                transform=env_transform)
+            
+            env_datasets = []
+            for ii in range(hparams['np']):
+                env_datasets.append (ImageFolder(path,
+                transform=env_transform))
+
+            env_dataset = torch.utils.data.ConcatDataset(env_datasets) 
 
             self.datasets.append(env_dataset)
 
         self.input_shape = (3, 224, 224,)
-        self.num_classes = len(self.datasets[-1].classes)
+        self.num_classes = 7 #len(self.datasets[-1][-1].classes)
 
 class VLCS(MultipleEnvironmentImageFolder):
     CHECKPOINT_FREQ = 300
