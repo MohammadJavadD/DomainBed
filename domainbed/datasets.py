@@ -237,7 +237,7 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
             self.datasets.append(env_dataset)
 
         self.input_shape = (3, 224, 224,)
-        self.num_classes = 7 #len(self.datasets[-1][-1].classes)
+        self.num_classes = len(self.datasets[-1].datasets[-1].classes)
 
 class VLCS(MultipleEnvironmentImageFolder):
     CHECKPOINT_FREQ = 300
